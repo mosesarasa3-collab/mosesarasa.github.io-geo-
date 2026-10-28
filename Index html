@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViewTube | Video Website</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #101116;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #191a22;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #ff4545;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 25px;
+      border: 1px solid #444;
+      background: #272832;
+      color: white;
+      width: 230px;
+      max-width: 100%;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 27px;
+    }
+
+    .featured {
+      background: #20212a;
+      padding: 15px;
+      border-radius: 14px;
+      margin-bottom: 25px;
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      background: black;
+      max-height: 500px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #20212a;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .card video {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      font-size: 16px;
+    }
+
+    button {
+      background: #ff4545;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #aaa;
+    }
+
+    .empty {
+      color: #ccc;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">▶ ViewTube</div>
+    <input
+      id="search"
+      type="search"
+      placeholder="Search videos..."
+      aria-label="Search videos">
+  </header>
+
+  <main>
+    <h1>Discover Videos</h1>
+    <p>Watch, explore and enjoy your favourite videos.</p>
+
+    <section class="featured">
+      <h2 id="featuredTitle">Featured Video</h2>
+
+      <video id="mainVideo" controls playsinline>
+        Your browser does not support video playback.
+      </video>
+
+      <p id="featuredDescription">
+        Select a video from the gallery below to watch it here.
+      </p>
+    </section>
+
+    <h2>Video Library</h2>
+
+    <div class="gallery" id="gallery">
+
+      <article class="card"
+        data-title="Nature and Landscapes">
+        <video controls playsinline preload="none">
+          <source
+            src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+            type="video/mp4">
+        </video>
+        <h3>Nature and Landscapes</h3>
+        <button class="watch">Watch here</button>
+      </article>
+
+      <article class="card"
+        data-title="Big Buck Bunny Animation">
+        <video controls playsinline preload="none">
+          <source
+            src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            type="video/mp4">
+        </video>
+        <h3>Big Buck Bunny Animation</h3>
+        <button class="watch">Watch here</button>
+      </article>
+
+      <article class="card"
+        data-title="Elephants Dream">
+        <video controls playsinline preload="none">
+          <source
+            src="https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            type="video/mp4">
+        </video>
+        <h3>Elephants Dream</h3>
+        <button class="watch">Watch here</button>
+      </article>
+
+    </div>
+
+    <p class="empty" id="empty">
+      No videos match your search.
+    </p>
+  </main>
+
+  <footer>
+    <p>ViewTube — A video website project.</p>
+    <p>Share and watch videos responsibly.</p>
+  </footer>
+
+  <script>
+    const search = document.getElementById("search");
+    const cards = document.querySelectorAll(".card");
+    const mainVideo = document.getElementById("mainVideo");
+    const featuredTitle = document.getElementById("featuredTitle");
+    const description = document.getElementById("featuredDescription");
+    const empty = document.getElementById("empty");
+
+    cards.forEach(card => {
+      card.querySelector(".watch").addEventListener("click", () => {
+        const video = card.querySelector("video");
+        const source = video.querySelector("source");
+
+        mainVideo.pause();
+        mainVideo.src = source.src;
+        mainVideo.load();
+
+        featuredTitle.textContent = card.dataset.title;
+        description.textContent =
+          "Now selected: " + card.dataset.title;
+
+        mainVideo.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      });
+    });
+
+    search.addEventListener("input", () => {
+      const query = search.value.toLowerCase();
+      let visible = 0;
+
+      cards.forEach(card => {
+        const matches =
+          card.dataset.title.toLowerCase().includes(query);
+
+        card.style.display = matches ? "" : "none";
+
+        if (matches) visible++;
+      });
+
+      empty.style.display = visible ? "none" : "block";
+    });
+  </script>
+</body>
+</html>
+<p>contact mosesarasa3@gmail.com/0793456478</p>
